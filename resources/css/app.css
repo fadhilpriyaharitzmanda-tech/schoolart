@@ -1,0 +1,364 @@
+/* ─── Google Fonts (must come first) ─── */
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+
+@import 'tailwindcss';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+
+/* ─── Scholart Design System ─── */
+@theme {
+    /* Typography */
+    --font-sans: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif;
+    --font-display: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif;
+
+    /* Brand Colors — Indigo/Violet palette */
+    --color-brand-50:  oklch(0.969 0.016 265);
+    --color-brand-100: oklch(0.938 0.032 265);
+    --color-brand-200: oklch(0.881 0.062 265);
+    --color-brand-300: oklch(0.797 0.103 265);
+    --color-brand-400: oklch(0.699 0.141 265);
+    --color-brand-500: oklch(0.604 0.178 265);
+    --color-brand-600: oklch(0.515 0.196 265);
+    --color-brand-700: oklch(0.433 0.183 265);
+    --color-brand-800: oklch(0.369 0.157 265);
+    --color-brand-900: oklch(0.319 0.130 265);
+    --color-brand-950: oklch(0.215 0.099 265);
+
+    /* Accent — Violet */
+    --color-accent-400: oklch(0.714 0.182 303);
+    --color-accent-500: oklch(0.627 0.192 303);
+    --color-accent-600: oklch(0.541 0.183 303);
+
+    /* Surface neutrals */
+    --color-surface-0:   oklch(1 0 0);
+    --color-surface-50:  oklch(0.984 0.003 265);
+    --color-surface-100: oklch(0.967 0.005 265);
+    --color-surface-200: oklch(0.928 0.007 265);
+    --color-surface-800: oklch(0.234 0.020 265);
+    --color-surface-900: oklch(0.165 0.018 265);
+    --color-surface-950: oklch(0.109 0.014 265);
+
+    /* Status colors */
+    --color-success-500: oklch(0.694 0.155 162);
+    --color-warning-500: oklch(0.769 0.164 70);
+    --color-danger-500:  oklch(0.637 0.196 25);
+
+    /* Radius tokens */
+    --radius-sm:  0.375rem;
+    --radius-md:  0.625rem;
+    --radius-lg:  0.875rem;
+    --radius-xl:  1.25rem;
+    --radius-2xl: 1.75rem;
+
+    /* Shadow tokens */
+    --shadow-card:  0 1px 3px 0 oklch(0 0 0 / 0.06), 0 1px 2px -1px oklch(0 0 0 / 0.06);
+    --shadow-panel: 0 4px 16px 0 oklch(0 0 0 / 0.08), 0 1px 3px 0 oklch(0 0 0 / 0.05);
+    --shadow-focus: 0 0 0 3px var(--color-brand-200);
+}
+
+/* ─── Base Styles ─── */
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+html {
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    scroll-behavior: smooth;
+}
+
+body {
+    background-color: var(--color-surface-50);
+    color: oklch(0.165 0.018 265);
+}
+
+/* ─── Scrollbar ─── */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+::-webkit-scrollbar-thumb {
+    background: oklch(0.85 0.01 265);
+    border-radius: 999px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: oklch(0.75 0.02 265);
+}
+
+/* ─── Reusable Component Utilities ─── */
+@layer utilities {
+    /* Cards */
+    .card {
+        background: var(--color-surface-0);
+        border: 1px solid var(--color-surface-200);
+        border-radius: var(--radius-xl);
+        box-shadow: var(--shadow-card);
+    }
+
+    /* Gradient brand button */
+    .btn-brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.625rem 1.25rem;
+        background: linear-gradient(135deg, var(--color-brand-600), var(--color-accent-600));
+        color: white;
+        font-size: 0.875rem;
+        font-weight: 600;
+        border-radius: var(--radius-lg);
+        border: none;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        box-shadow: 0 2px 8px oklch(0.515 0.196 265 / 0.35);
+        text-decoration: none;
+    }
+    .btn-brand:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 14px oklch(0.515 0.196 265 / 0.45);
+        filter: brightness(1.05);
+    }
+    .btn-brand:active {
+        transform: translateY(0);
+    }
+
+    /* Ghost button */
+    .btn-ghost {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.5rem 1rem;
+        background: transparent;
+        color: oklch(0.434 0.020 265);
+        font-size: 0.875rem;
+        font-weight: 500;
+        border-radius: var(--radius-md);
+        border: 1px solid var(--color-surface-200);
+        cursor: pointer;
+        transition: all 0.15s ease;
+        text-decoration: none;
+    }
+    .btn-ghost:hover {
+        background: var(--color-surface-100);
+        border-color: var(--color-surface-200);
+        color: oklch(0.319 0.130 265);
+    }
+
+    /* Sidebar nav link */
+    .nav-link {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 0.625rem 0.875rem;
+        border-radius: var(--radius-lg);
+        font-size: 0.875rem;
+        font-weight: 500;
+        color: oklch(0.434 0.020 265);
+        text-decoration: none;
+        transition: all 0.15s ease;
+        position: relative;
+    }
+    .nav-link:hover {
+        background: var(--color-surface-100);
+        color: oklch(0.319 0.130 265);
+    }
+    .nav-link.active {
+        background: var(--color-brand-50);
+        color: var(--color-brand-700);
+        font-weight: 600;
+    }
+    .nav-link.active .nav-icon {
+        color: var(--color-brand-600);
+    }
+
+    /* Badge */
+    .badge {
+        display: inline-flex;
+        align-items: center;
+        padding: 0.125rem 0.5rem;
+        font-size: 0.75rem;
+        font-weight: 600;
+        border-radius: 999px;
+    }
+    .badge-brand {
+        background: var(--color-brand-50);
+        color: var(--color-brand-700);
+    }
+    .badge-success {
+        background: oklch(0.95 0.04 162);
+        color: oklch(0.42 0.12 162);
+    }
+    .badge-warning {
+        background: oklch(0.97 0.04 70);
+        color: oklch(0.50 0.12 70);
+    }
+    .badge-gray {
+        background: var(--color-surface-100);
+        color: oklch(0.434 0.020 265);
+    }
+
+    /* Gradient text */
+    .text-gradient {
+        background: linear-gradient(135deg, var(--color-brand-600), var(--color-accent-500));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+
+    /* Glass effect */
+    .glass {
+        background: oklch(1 0 0 / 0.75);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border: 1px solid oklch(1 0 0 / 0.3);
+    }
+
+    /* Animated progress bar */
+    .progress-bar {
+        height: 6px;
+        border-radius: 999px;
+        background: var(--color-surface-200);
+        overflow: hidden;
+    }
+    .progress-fill {
+        height: 100%;
+        border-radius: 999px;
+        background: linear-gradient(90deg, var(--color-brand-500), var(--color-accent-500));
+        transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* Interactive Modern Card (Gen-Z Clean SaaS) */
+    .card-interactive {
+        background: var(--color-surface-0);
+        border: 1px solid var(--color-surface-200);
+        border-radius: var(--radius-xl);
+        box-shadow: 0 1px 3px 0 oklch(0 0 0 / 0.04);
+        transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+        position: relative;
+    }
+    .card-interactive:hover {
+        transform: translateY(-2px);
+        border-color: var(--color-brand-300);
+        box-shadow: 0 10px 25px -5px oklch(0.515 0.196 265 / 0.10), 0 8px 10px -6px oklch(0 0 0 / 0.04);
+    }
+
+    /* Segmented pill control */
+    .segmented-control {
+        display: inline-flex;
+        align-items: center;
+        padding: 0.25rem;
+        background: var(--color-surface-100);
+        border-radius: var(--radius-xl);
+        border: 1px solid var(--color-surface-200);
+    }
+    .segmented-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.375rem;
+        padding: 0.4rem 0.875rem;
+        border-radius: var(--radius-lg);
+        font-size: 0.8125rem;
+        font-weight: 600;
+        color: oklch(0.48 0.015 265);
+        cursor: pointer;
+        transition: all 0.15s ease;
+        border: none;
+        background: transparent;
+        white-space: nowrap;
+    }
+    .segmented-pill:hover {
+        color: var(--color-surface-950);
+    }
+    .segmented-pill.active {
+        background: var(--color-surface-0);
+        color: var(--color-brand-700);
+        box-shadow: 0 1px 3px 0 oklch(0 0 0 / 0.08);
+    }
+
+    /* Clickable chips */
+    .prompt-chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.375rem;
+        padding: 0.375rem 0.75rem;
+        border-radius: 9999px;
+        background: var(--color-surface-0);
+        border: 1px solid var(--color-surface-200);
+        color: var(--color-surface-800);
+        font-size: 0.75rem;
+        font-weight: 500;
+        transition: all 0.15s ease;
+        cursor: pointer;
+        box-shadow: 0 1px 2px 0 oklch(0 0 0 / 0.03);
+    }
+    .prompt-chip:hover {
+        border-color: var(--color-brand-400);
+        color: var(--color-brand-700);
+        background: var(--color-brand-50);
+        transform: translateY(-1px);
+    }
+    .prompt-chip:active {
+        transform: translateY(0);
+    }
+
+    /* Shimmer loading */
+    .shimmer {
+        background: linear-gradient(
+            90deg,
+            var(--color-surface-100) 25%,
+            var(--color-surface-200) 50%,
+            var(--color-surface-100) 75%
+        );
+        background-size: 200% 100%;
+        animation: shimmer 1.5s infinite;
+    }
+}
+
+/* ─── Keyframe Animations ─── */
+@keyframes shimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(16px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+@keyframes pulseGlow {
+    0%, 100% { box-shadow: 0 0 0 0 var(--color-brand-200); }
+    50%       { box-shadow: 0 0 0 8px transparent; }
+}
+
+@keyframes slideInLeft {
+    from { transform: translateX(-100%); opacity: 0; }
+    to   { transform: translateX(0);    opacity: 1; }
+}
+
+/* Animation utilities */
+.animate-fade-in-up  { animation: fadeInUp 0.5s ease forwards; }
+.animate-fade-in     { animation: fadeIn 0.4s ease forwards; }
+.animate-slide-left  { animation: slideInLeft 0.3s ease forwards; }
+
+/* Stagger delays for dashboard cards */
+.stagger-1 { animation-delay: 0.05s; opacity: 0; }
+.stagger-2 { animation-delay: 0.10s; opacity: 0; }
+.stagger-3 { animation-delay: 0.15s; opacity: 0; }
+.stagger-4 { animation-delay: 0.20s; opacity: 0; }
+.stagger-5 { animation-delay: 0.25s; opacity: 0; }
+.stagger-6 { animation-delay: 0.30s; opacity: 0; }
